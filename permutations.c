@@ -51,9 +51,9 @@ int random_num(int inf, int sup)
 int* generate_perm(int N)
 {
   int *array = NULL;
-  int i;
-  int temp;
-  int random;
+  int i = 0;
+  int temp = 0;
+  int random = 0;
 
   if (N <= 0) {
     return NULL;
@@ -61,25 +61,27 @@ int* generate_perm(int N)
   
   array = (int*)calloc(N, sizeof(int));
   if (!array){
-    //error
+    /*error*/
     return NULL;
   }
   
   for (i = 0; i < N; i++)
   {
-    array[i] = i;
+    array[i] = i + 1;
   }
 
   for (i = 0; i < N; i++)
   {
-    random = random_num(i,N);
+    random = random_num(i + 1,N);
     if (random == ERR){
+      free(array);
       return NULL;
     }
-    //intercambiar perm[i] con perm[random_num(i, N)
+    /*intercambiar perm[i] con perm[random_num(i, N)*/
+    temp = array[i];
     array[i] = temp;
-    array[i] = array[random];
-    array[random] = temp;
+    array[i] = array[random -1];
+    array[random -1] = temp;
 
   }
 
