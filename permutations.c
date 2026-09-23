@@ -105,10 +105,43 @@ int* generate_perm(int N)
 /***************************************************/
 int** generate_permutations(int n_perms, int N)
 {
-  if (N < 0) {
+  int i = 0;
+  int j = 0;
+  int **matrix;
+  matrix = NULL;
+  if (N <= 0 || n_perms <= 0) {  
     return NULL;
   }
-/* your code */
+
+  matrix = (int**)calloc(n_perms, sizeof(int*));
+  if (!matrix){
+    return NULL;
+  }
+
+  for (i = 0; i < n_perms; i++)
+  {
+    /*
+    matrix[i] = (int*)calloc(1, sizeof(int));
+    if (!matrix[i]){
+      for (j = i; j >= 0; j--)
+      {
+        free(matrix[j]);
+      }
+      free(matrix);
+      return NULL;
+    }*/
+
+    matrix[i] = generate_perm(N);
+    if (!matrix[i]){
+      for (j = 0; j < i; j++)
+      {
+        free(matrix[j]);
+      }
+      free(matrix);
+      return NULL;
+    }
+  }
+  return matrix; 
 }
 
 
