@@ -9,7 +9,8 @@
  *
  */
 
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "permutations.h"
 
 /***************************************************/
@@ -27,7 +28,11 @@
 /***************************************************/
 int random_num(int inf, int sup)
 {
-  /* your code */
+  if (inf < 0 || sup < inf) {
+    return ERR;
+  }
+
+  return inf + rand() % (sup - inf + 1);
 }
 
 /***************************************************/
@@ -45,7 +50,40 @@ int random_num(int inf, int sup)
 /***************************************************/
 int* generate_perm(int N)
 {
-  /* your code */
+  int *array = NULL;
+  int i;
+  int temp;
+  int random;
+
+  if (N <= 0) {
+    return NULL;
+  }
+  
+  array = (int*)calloc(N, sizeof(int));
+  if (!array){
+    //error
+    return NULL;
+  }
+  
+  for (i = 0; i < N; i++)
+  {
+    array[i] = i;
+  }
+
+  for (i = 0; i < N; i++)
+  {
+    random = random_num(i,N);
+    if (random == ERR){
+      return NULL;
+    }
+    //intercambiar perm[i] con perm[random_num(i, N)
+    array[i] = temp;
+    array[i] = array[random];
+    array[random] = temp;
+
+  }
+
+  return array;
 }
 
 /***************************************************/
@@ -65,5 +103,10 @@ int* generate_perm(int N)
 /***************************************************/
 int** generate_permutations(int n_perms, int N)
 {
+  if (N < 0) {
+    return NULL;
+  }
 /* your code */
 }
+
+
