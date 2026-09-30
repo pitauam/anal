@@ -33,7 +33,7 @@ int InsertSort(int* array, int ip, int iu)
 
        
     while (j >= ip && seguir) {
-      ob_count++; 
+      count_ob++; 
             
       if (array[j] > key) {            
         array[j + 1] = array[j];

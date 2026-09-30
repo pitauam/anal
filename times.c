@@ -94,7 +94,21 @@ short generate_sorting_times(pfunc_sort method, char* file,
                                 int num_min, int num_max, 
                                 int incr, int n_perms)
 {
-  /* Your code */
+  if (!method || !file || num_min <= 0 || num_max <= 0 || incr <= 0 || n_perms <= 0){
+    return ERR;
+  }
+
+  
+
+
+
+
+
+
+
+
+
+
 }
 
 /***************************************************/
