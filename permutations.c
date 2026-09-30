@@ -55,7 +55,7 @@ int* generate_perm(int N)
   int temp = 0;
   int random = 0;
 
-  if (N <= 0) {
+  if (N <= 0) { 
     return NULL;
   }
   
@@ -79,10 +79,8 @@ int* generate_perm(int N)
     }
     /*intercambiar perm[i] con perm[random_num(i, N)*/
     temp = array[i];
-    array[i] = temp;
-    array[i] = array[random -1];
-    array[random -1] = temp;
-
+    array[i] = array[random - 1];
+    array[random - 1] = temp;
   }
 
   return array;

@@ -35,7 +35,7 @@ int main(int argc, char** argv)
   }
 
   printf("Practice number 1, section 3\n");
-  printf("Done by: your names\n");
+  printf("Done by: Santiago Pita y Matias Cantalejo your names\n");
   printf("Group: Your group\n");
 
 
