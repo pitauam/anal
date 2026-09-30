@@ -35,8 +35,8 @@ int main(int argc, char** argv)
     exit(-1);
   }
   printf("Practice no 1, Section 1\n");
-  printf("Done by: Santiago Pita y Matias Cantalejo Your names\n");
-  printf("Grupo: 1261 Your group\n");
+  printf("Done by: Santiago Pita y Matias Cantalejo\n");
+  printf("Grupo: 1261\n");
 
   /* check command line */
   for(i = 1; i < argc; i++) {
