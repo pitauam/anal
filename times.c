@@ -13,6 +13,7 @@
 #include "sorting.h"
 #include <time.h>
 #include "permutations.h"
+#include <stdlib.h>
 
 
 /***************************************************/
@@ -26,7 +27,7 @@ short average_sorting_time(pfunc_sort metodo,
                               PTIME_AA ptime)
 {
 
-  double time = 0;
+  double total_time = 0;
   int i = 0;
   clock_t inicio, fin;
   int **array = NULL;
@@ -62,22 +63,26 @@ short average_sorting_time(pfunc_sort metodo,
     }
     
   fin = clock();
-  free(array);
-
-
 
   /*calcula el tiempo de ejecucion*/
-  time = (double)(fin - inicio) / CLOCKS_PER_SEC;
+  total_time = (double)(fin - inicio) / CLOCKS_PER_SEC;
 
   ptime->N = N;
-  ptime->n_elems =
-  ptime->time = time;
-  ptime->average_ob =
+  ptime->n_elems = n_perms;
+  ptime->time = total_time / n_perms;
+  ptime->average_ob = (double)total_obs / n_perms;
+  ptime->max_ob = max_obs;
+  ptime->min_ob = min_obs;
 
+  if (array){
+    for (i = 0; i < n_perms; i++)
+    {
+      free(array[i]);
+    }
+    free(array);
+  }
 
-
-
-
+  return OK;
 }
 
 /***************************************************/
