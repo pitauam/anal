@@ -101,6 +101,8 @@ int* generate_perm(int N)
 /* to each of the permutations                     */
 /* NULL en case of error                           */
 /***************************************************/
+
+
 int** generate_permutations(int n_perms, int N)
 {
   int i = 0;
@@ -141,5 +143,3 @@ int** generate_permutations(int n_perms, int N)
   }
   return matrix; 
 }
-
-
