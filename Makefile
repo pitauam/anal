@@ -3,8 +3,12 @@
 # It is assumed that the name of the source files is exercise1.c, exercise2.c,...,exercise.h
 #-----------------------
 
+
+
+#somos grupo 12
+
 CC = gcc -ansi -pedantic
-CFLAGS = -Wall
+CFLAGS = -Wall -Wextra -pedantic -std=c99 # flags para los warnings
 EXE = exercise1 exercise2 exercise3 exercise4 exercise5
 
 all : $(EXE)

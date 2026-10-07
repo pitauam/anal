@@ -17,7 +17,7 @@
 
 
 /***************************************************/
-/* Function: average_sorting_time Date:            */
+/* Function: average_sorting_time Date:   23/09/26 */
 /*                                                 */
 /* Your documentation                              */
 /***************************************************/
@@ -27,14 +27,15 @@ short average_sorting_time(pfunc_sort metodo,
                               PTIME_AA ptime)
 {
 
-  double total_time = 0;
   int i = 0;
+  int j = 0;
   clock_t inicio, fin;
   int **array = NULL;
   int obs = 0;
   int max_obs = 0;
   int min_obs = 0;
-  int total_obs = 0;
+  long total_obs = 0;
+  double total_time = 0.0;
 
   if (!metodo || n_perms <= 0 || N <= 0 || !ptime){
     return ERR;
@@ -45,27 +46,44 @@ short average_sorting_time(pfunc_sort metodo,
     return ERR;
   }
 
-  inicio = clock();
-    
-    for (i = 0; i < n_perms; i++)
-    {
-      obs = metodo(array[i], 0, N - 1);
-      
-      if (i == 0) {
-        min_obs = obs;
-        max_obs = obs;
-      } else {
-        if (obs < min_obs) min_obs = obs;
-        if (obs > max_obs) max_obs = obs;
-      }
-      
-      total_obs += obs;
-    }
-    
-  fin = clock();
+  for (i = 0; i < n_perms; i++) {
 
-  /*calcula el tiempo de ejecucion*/
-  total_time = (double)(fin - inicio) / CLOCKS_PER_SEC;
+    inicio = clock();
+    obs = metodo(array[i], 0, N - 1);
+    fin = clock();
+
+    if (obs == ERR){
+      for (j = 0; j < n_perms; j++)
+      {
+        free(array[j]);
+      } 
+
+      free(array);
+
+      return ERR;
+    }
+
+    total_time += (double)(fin - inicio) / CLOCKS_PER_SEC; /*casting para que devuelva todo*/
+
+    if (i == 0)
+    {
+      min_obs = obs;
+      max_obs = obs;
+    }
+    else
+    {
+      if (obs < min_obs)
+      {
+        min_obs = obs;
+      }
+
+      if (obs > max_obs)
+      {
+        max_obs = obs;
+      }
+    }
+    total_obs += obs;
+  }
 
   ptime->N = N;
   ptime->n_elems = n_perms;
@@ -74,13 +92,12 @@ short average_sorting_time(pfunc_sort metodo,
   ptime->max_ob = max_obs;
   ptime->min_ob = min_obs;
 
-  if (array){
-    for (i = 0; i < n_perms; i++)
-    {
-      free(array[i]);
-    }
-    free(array);
+  for (i = 0; i < n_perms; i++)
+  {
+    free(array[i]);
   }
+  
+  free(array);
 
   return OK;
 }
