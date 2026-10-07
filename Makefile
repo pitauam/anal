@@ -13,7 +13,7 @@ all : $(EXE)
 
 .PHONY : clean
 clean :
-	rm -f *.o core $(EXE) *.log 
+	rm -f *.o core $(EXE) *.log *.png
 #añadido eliminar los .log
 
 $(EXE) : % : %.o sorting.o times.o permutations.o
@@ -64,3 +64,11 @@ exercise5_test:
 	@echo Running exercise5
 	@./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
 
+grafica: clean exercise1
+	@echo "Generando grafica"
+	./exercise1 -limInf -10 -limSup 10 -numN 21000 > histograma.log
+	@echo "Iniciando gnuplot"
+	gnuplot graficagnuplot.gp
+
+#gnuplot:
+#gnuplot graficagnuplot.gp
