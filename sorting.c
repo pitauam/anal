@@ -56,36 +56,36 @@ int InsertSort(int* array, int ip, int iu)
 /***************************************************/
 int BubbleSort(int* array, int ip, int iu)
 {
-  int i,j,key;
+  int i, j, key;
   int count_ob = 0;
   int seguir;
 
-  if(!array || ip < 0 || ip > iu)
-  return ERR;
+  if(!array || ip < 0 || ip > iu){
+    return ERR;
+  }
 
   i = iu;
   seguir = 1;
 
-  while(i>ip && seguir){
+  while(i > ip && seguir)
+  {
+    seguir = 0;
 
-    for(j=ip;j<i;j++){
-      count_ob ++;
-      if(array[j]>array[j+1]){
+    for(j = ip; j < i; j++)
+    {
+      count_ob++;
+      if(array[j] > array[j+1])
+      {
         key = array[j];
         array[j] = array[j+1];
         array[j+1] = key;
+        
         seguir = 1;
-
       }
     }
-
+    
+    i--; 
   }
+  
   return count_ob;
-
 }
-
-
-
-
-
-
