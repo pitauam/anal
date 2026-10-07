@@ -180,11 +180,10 @@ short save_time_table(char* file, PTIME_AA ptime, int n_times)
     return ERR;
   }
 
-  fprintf(f, "# N | n_elems | time | average_ob | min_ob | max_ob \n");
-
+  fprintf(f, "# N     |  n_elems  |     time     |     average_ob     |     min_ob     |     max_ob\n");
   for (i = 0; i < n_times; i++)
   {
-    fprintf(f, "%3i %9i %6lf %12lf %8i %8i\n", ptime[i].N, ptime[i].n_elems, ptime[i].time, ptime[i].average_ob, ptime[i].min_ob, ptime[i].max_ob);
+    fprintf(f, "  %-5d | %-9d | %-12.6f | %-18.2f | %-12d | %-12d\n", ptime[i].N, ptime[i].n_elems, ptime[i].time, ptime[i].average_ob, ptime[i].min_ob, ptime[i].max_ob);
   }
 
 

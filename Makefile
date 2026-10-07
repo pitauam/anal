@@ -15,7 +15,7 @@ all : $(EXE)
 
 .PHONY : clean
 clean :
-	rm -f *.o core $(EXE)
+	rm -f *.o core $(EXE) *.log
 
 $(EXE) : % : %.o sorting.o times.o permutations.o
 	@echo "#---------------------------"
