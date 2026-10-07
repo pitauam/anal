@@ -14,7 +14,7 @@
 #include <time.h>
 #include "permutations.h"
 #include <stdlib.h>
-
+#include <stdio.h> /*para fopen*/
 
 /***************************************************/
 /* Function: average_sorting_time Date:   23/09/26 */
@@ -104,7 +104,7 @@ short average_sorting_time(pfunc_sort metodo,
 }
 
 /***************************************************/
-/* Function: generate_sorting_times Date:          */
+/* Function: generate_sorting_times Date:  7/10/26 */
 /*                                                 */
 /* Your documentation                              */
 /***************************************************/
@@ -167,7 +167,28 @@ short generate_sorting_times(pfunc_sort method, char* file,
 /***************************************************/
 short save_time_table(char* file, PTIME_AA ptime, int n_times)
 {
-  /* your code */
+  if (!file || !ptime || n_times <= 0){
+    return ERR;
+  }
+
+  int i = 0;
+
+  /*una fila por tamaño, 6 columnas,*/
+  FILE *f = NULL;
+  f = fopen(file, "w");
+  if (!f){
+    return ERR;
+  }
+
+  fprintf(f, "# N | n_elems | time | average_ob | min_ob | max_ob \n");
+
+  for (i = 0; i < n_times; i++)
+  {
+    fprintf(f, "%3i %9i %6lf %12lf %8i %8i\n", ptime[i].N, ptime[i].n_elems, ptime[i].time, ptime[i].average_ob, ptime[i].min_ob, ptime[i].max_ob);
+  }
+
+
+  fclose(f);
+
+  return OK;
 }
-
-
