@@ -3,8 +3,6 @@
 # It is assumed that the name of the source files is exercise1.c, exercise2.c,...,exercise.h
 #-----------------------
 
-
-
 #somos grupo 12
 
 CC = gcc -ansi -pedantic
@@ -15,7 +13,8 @@ all : $(EXE)
 
 .PHONY : clean
 clean :
-	rm -f *.o core $(EXE) *.log
+	rm -f *.o core $(EXE) *.log 
+#añadido eliminar los .log
 
 $(EXE) : % : %.o sorting.o times.o permutations.o
 	@echo "#---------------------------"

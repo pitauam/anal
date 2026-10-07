@@ -28,7 +28,7 @@
 /***************************************************/
 int random_num(int inf, int sup)
 {
-  if (inf < 0 || sup < inf) {
+  if (inf < 0 || sup < inf || RAND_MAX < (sup-inf)) {
     return ERR;
   }
 

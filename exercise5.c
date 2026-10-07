@@ -46,7 +46,7 @@ int main(int argc, char** argv)
 
   printf("Practice number 1, section 5\n");
   printf("Done by: Santiago Pita y Matias Cantalejo\n");
-  printf("Group: 1261\n");
+  printf("Group: 12\n");
   
   /* check command line */
   for(i = 1; i < argc ; i++) {
