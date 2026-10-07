@@ -26,6 +26,10 @@ short average_sorting_time(pfunc_sort metodo,
                               int N, 
                               PTIME_AA ptime)
 {
+  
+  if (!metodo || n_perms <= 0 || N <= 0 || !ptime){
+    return ERR;
+  }
 
   int i = 0;
   int j = 0;
@@ -37,9 +41,6 @@ short average_sorting_time(pfunc_sort metodo,
   long total_obs = 0;
   double total_time = 0.0;
 
-  if (!metodo || n_perms <= 0 || N <= 0 || !ptime){
-    return ERR;
-  }
 
   array = generate_permutations(n_perms, N);
   if (!array){
@@ -111,9 +112,44 @@ short generate_sorting_times(pfunc_sort method, char* file,
                                 int num_min, int num_max, 
                                 int incr, int n_perms)
 {
-  if (!method || !file || num_min <= 0 || num_max <= 0 || incr <= 0 || n_perms <= 0){
+  if (!method || !file || num_min <= 0 || num_max <= 0 || incr <= 0 || n_perms <= 0 || num_min > num_max){
     return ERR;
   }
+
+  int n_times = 0;
+  int current_N = 0;
+  int i = 0;
+  PTIME_AA table = NULL;
+  short status = OK;
+
+
+  n_times = ((num_max - num_min) / incr) + 1;
+
+  table = (PTIME_AA)calloc(n_times, sizeof(TIME_AA));
+  if (!table){
+    return ERR;
+  }
+
+  current_N = num_min;
+
+  for (i = 0; current_N <= num_max; i++)
+  {
+    status = average_sorting_time(method, n_perms, current_N, &table[i]);
+    if (status == ERR)
+    {
+      free(table);
+
+      return ERR;
+    }
+    current_N += incr;
+  }
+
+  status = save_time_table(file, table, n_times);
+  
+  free(table);
+
+  return status;
+}
 
   
 
@@ -124,12 +160,8 @@ short generate_sorting_times(pfunc_sort method, char* file,
 
 
 
-
-
-}
-
 /***************************************************/
-/* Function: save_time_table Date:                 */
+/* Function: save_time_table Date:   7/10/26       */
 /*                                                 */
 /* Your documentation                              */
 /***************************************************/
