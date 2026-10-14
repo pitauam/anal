@@ -13,7 +13,7 @@ all : $(EXE)
 
 .PHONY : clean
 clean :
-	rm -f *.o core $(EXE) *.log *.png
+	rm -f *.o core $(EXE) *.log
 #añadido eliminar los .log
 
 $(EXE) : % : %.o sorting.o times.o permutations.o
@@ -64,11 +64,39 @@ exercise5_test:
 	@echo Running exercise5
 	@./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
 
-grafica: clean exercise1
-	@echo "Generando grafica"
-	./exercise1 -limInf -10 -limSup 10 -numN 21000 > histograma.log
-	@echo "Iniciando gnuplot"
-	gnuplot graficagnuplot.gp
+grafica: clean exercise4 exercise5 exercise5_insertsort
+	@echo "Generando datos de tiempos para InsertSort..."
+	./exercise5_insertsort -num_min 100 -num_max 2000 -incr 100 -numP 500 -outputFile insert.log
+	@echo "Generando datos de tiempos para BubbleSort..."
+	./exercise5 -num_min 100 -num_max 2000 -incr 100 -numP 500 -outputFile bubble.log
+	@echo "Iniciando gnuplot para generar las 3 gráficas..."
+	gnuplot tiempos_comparativa.gp
+	gnuplot operaciones_insert.gp
+	gnuplot operaciones_bubble.gp
+
+#instrucciones para compilar exercise5_insertsort
+
+exercise5_insertsort: exercise5_insertsort.o sorting.o times.o permutations.o
+	$(CC) $(CFLAGS) -o exercise5_insertsort exercise5_insertsort.o sorting.o times.o permutations.o
+
+exercise5_insertsort.o: exercise5_insertsort.c
+	$(CC) $(CFLAGS) -c $<
+
+exercises:
+	make all
+	@echo running exercises
+	@echo ---------running exercise 1------------------
+	make exercise1_test
+	@echo ------------------running exercise 2------------------
+	make exercise2_test
+	@echo ------------------running exercise 3------------------
+	make exercise3_test
+	@echo ------------------running exercise 4------------------
+	make exercise4_test
+	@echo ------------------running exercise 5------------------
+	make exercise5_test
+
+
 
 #gnuplot:
 #gnuplot graficagnuplot.gp

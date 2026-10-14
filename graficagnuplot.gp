@@ -23,5 +23,3 @@ hist(x, width) = width * floor(x / width) + width / 2.0
 # 5. Dibujar los datos reales (barras) frente a la teoría (línea discontinua)
 plot "histograma.log" using (hist($1, 1)):(1.0) smooth frequency with boxes title "Frecuencia Observada", \
      1000 with lines linewidth 2 linecolor rgb "red" title "Frecuencia Teórica"
-
-
