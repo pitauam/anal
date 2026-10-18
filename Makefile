@@ -98,5 +98,8 @@ exercises:
 
 
 
-#gnuplot:
-#gnuplot graficagnuplot.gp
+histograma: exercise1
+	@echo "Generando datos para el histograma..."
+	./exercise1 -limInf 0 -limSup 9 -numN 100000 > histograma.log
+	@echo "Creando la gráfica random_num.png..."
+	gnuplot histograma.gp
