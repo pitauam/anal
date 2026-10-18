@@ -15,7 +15,7 @@
 
 /***************************************************/
 /* Function: random_num Date:                      */
-/* Authors:                                        */
+/* Authors:     Santiago Pita                      */
 /*                                                 */
 /* Rutine that generates a random number           */
 /* between two given numbers                       */
@@ -37,7 +37,7 @@ int random_num(int inf, int sup)
 
 /***************************************************/
 /* Function: generate_perm Date:                   */
-/* Authors:                                        */
+/* Authors:      Santiago Pita                     */
 /*                                                 */
 /* Rutine that generates a random permutation      */
 /*                                                 */
@@ -88,7 +88,7 @@ int* generate_perm(int N)
 
 /***************************************************/
 /* Function: generate_permutations Date:           */
-/* Authors:                                        */
+/* Authors:   Santiago Pita                        */
 /*                                                 */
 /* Function that generates n_perms random          */
 /* permutations with N elements                    */
