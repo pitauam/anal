@@ -1,13 +1,10 @@
+set terminal pngcairo size 800,600 enhanced font 'Arial,12'
+set output 'grafica_tiempos.png'
 set datafile separator "|"
-set terminal pngcairo size 800,600 enhanced font "sans,10"
-set output "comparativa_tiempos.png"
-
-set title "Comparativa de Tiempos Medios de CPU: InsertSort vs BubbleSort"
-set xlabel "Tamaño de la entrada (n_elems)"
+set title "Comparativa de Tiempos Medios de CPU"
+set xlabel "Tamaño de entrada (N)"
 set ylabel "Tiempo de CPU (segundos)"
+set key top left
 set grid
-set key left top
-
-# Usamos 'strcol' para limpiar espacios en blanco y asegurar que lea las columnas 2 y 3
-plot "insert.log" using (stringcolumn(2)+0):(stringcolumn(3)+0) with linespoints linewidth 2 linecolor rgb "blue" title "InsertSort (Media)", \
-     "bubble.log" using (stringcolumn(2)+0):(stringcolumn(3)+0) with linespoints linewidth 2 linecolor rgb "red" title "BubbleSort (Media)"
+plot "insert.log" every ::1 using 1:3 with linespoints lw 2 pt 7 title "InsertSort", \
+     "bubble.log" every ::1 using 1:3 with linespoints lw 2 pt 5 title "BubbleSort"

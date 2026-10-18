@@ -1,13 +1,11 @@
+set terminal pngcairo size 800,600 enhanced font 'Arial,12'
+set output 'grafica_insertsort.png'
 set datafile separator "|"
-set terminal pngcairo size 800,600 enhanced font "sans,10"
-set output "insert_operaciones.png"
-
-set title "Análisis de Operaciones Básicas: InsertSort"
-set xlabel "Tamaño de la entrada (n_elems)"
-set ylabel "Número de Ejecuciones de la Operación Básica"
+set title "InsertSort: Ejecuciones de la Operación Básica"
+set xlabel "Tamaño de entrada (N)"
+set ylabel "Número de comparaciones (OB)"
+set key top left
 set grid
-set key left top
-
-plot "insert.log" using (stringcolumn(2)+0):(stringcolumn(4)+0) with linespoints linewidth 2 linecolor rgb "blue" title "Media", \
-     "insert.log" using (stringcolumn(2)+0):(stringcolumn(5)+0) with lines linewidth 1 linecolor rgb "dark-green" title "Mínimo", \
-     "insert.log" using (stringcolumn(2)+0):(stringcolumn(6)+0) with lines linewidth 1 linecolor rgb "dark-red" title "Máximo"
+plot "insert.log" every ::1 using 1:6 with linespoints lw 2 pt 2 title "Máximo de OB", \
+     "insert.log" every ::1 using 1:4 with linespoints lw 2 pt 7 title "Media de OB", \
+     "insert.log" every ::1 using 1:5 with linespoints lw 2 pt 6 title "Mínimo de OB"
