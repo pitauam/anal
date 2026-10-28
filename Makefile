@@ -83,6 +83,8 @@ exercise5_insertsort.o: exercise5_insertsort.c
 	$(CC) $(CFLAGS) -c $<
 
 
+
+
 exercise4_mergesort: exercise4_mergesort.o sorting.o times.o permutations.o
 	$(CC) $(CFLAGS) -o exercise4_mergesort exercise4_mergesort.o sorting.o times.o permutations.o
 
@@ -92,6 +94,17 @@ exercise4_mergesort.o: exercise4_mergesort.c
 exercise4_mergesort_test:
 	make exercise4_mergesort
 	./exercise4_mergesort -size 20
+
+exercise5_mergesort: exercise5_mergesort.o sorting.o times.o permutations.o
+	$(CC) $(CFLAGS) -o exercise5_mergesort exercise5_mergesort.o sorting.o times.o permutations.o
+
+exercise5_mergesort.o: exercise5_mergesort.c
+	$(CC) $(CFLAGS) -c $<
+
+exercise5_mergesort_test:
+	make exercise5_mergesort
+	./exercise5_mergesort -num_min 3 -num_max 503 -incr 3 -numP 500 -outputFile tiempos_merge.txt
+
 
 
 exercises:
@@ -115,3 +128,9 @@ histograma: exercise1
 	./exercise1 -limInf 0 -limSup 9 -numN 100000 > histograma.log
 	@echo "Creando la gráfica random_num.png..."
 	gnuplot histograma.gp
+
+	
+
+# Regla para generar los gráficos y hacer el ajuste con GNUplot
+plot_tiempos_merge: tiempos_merge.txt fit_mergesort.gp
+	gnuplot fit_mergesort.gp
