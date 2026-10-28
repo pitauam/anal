@@ -1,0 +1,12 @@
+Analisis Teorico y Ajuste Experimental de MergeSort:
+
+1. Modelo Teorico y Seleccion de la Funcion de Ajuste
+Desde el punto de vista algoritmico, MergeSort utiliza una estrategia de "divide y venceras", lo que situa su complejidad temporal y de operaciones basicas en el orden O(n log2 n). Para contrastar la teoria con la practica, se ha seleccionado el modelo matematico f(n) = A * n * log2(n) + B, donde n representa el tamaño de la tabla, y A y B son los parametros de ajuste empirico obtenidos mediante el comando fit de GNUplot.
+
+2. Intervalo de Ajuste
+El estudio experimental se ha realizado sobre un conjunto de datos obtenidos de forma iterativa, variando el tamaño de la entrada desde un minimo de n = 3 hasta un maximo de n = 30, con un incremento constante (incremento de n = 3). Para mitigar desviaciones aleatorias y garantizar la robustez del analisis, los valores analizados representan la media obtenida a partir de un numero fijo de permutaciones.
+
+3. Ajuste Independiente: Operaciones Basicas y Tiempo de CPU
+Para cumplir con los objetivos de la practica, los ajustes se han procesado por separado para evitar confusiones en los resultados:
+- Operaciones Basicas (OB): El ajuste sobre el promedio de comparaciones muestra una correlacion excelente con el modelo teorico de O(n log2 n), reflejando exactamente el numero de ejecuciones de la operacion basica de comparacion de claves.
+- Tiempo de CPU: Se ha comprobado que el ajuste utiliza estrictamente los datos de tiempo de CPU medidos por el programa, separandolos del tiempo de pared real. Esto asegura que la carga externa del sistema operativo o las pausas del proceso no distorsionen la validez del analisis experimental.
