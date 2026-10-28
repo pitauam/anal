@@ -11,6 +11,9 @@
 
 
 #include "sorting.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 
 /***************************************************/
 /* Function: InsertSort    Date:30/09/26           */
@@ -151,6 +154,60 @@ int MergeSort(int* array, int ip, int iu)
 /***************************************************/
 int merge(int* array, int ip, int iu, int im)
 {
+  int *array_aux = NULL;
+  int i;
+  int j;
+  int k;
+  int count_ob = 0;
 
+  array_aux = (int*)calloc((iu + 1), sizeof(int));
+  if (!array_aux) {
+    return ERR;
+  }
 
+  i = ip;
+  j = im + 1;
+  k = ip;
+  
+  while (i <= im && j <= iu)
+  {
+    count_ob++;
+    if (array[i] < array[j])
+    {
+      array_aux[k] = array[i];
+      i++;
+    }
+    else
+    {
+      array_aux[k] = array[j];
+      j++;
+    }
+    k++;
+  }
+
+  if (i > im)
+  {
+    while (j <= iu)
+    {
+      array_aux[k] = array[j];
+      j++;
+      k++;
+    }
+  }
+  else if (j > iu)
+  {
+    while (i <= im)
+    {
+      array_aux[k] = array[i];
+      i++;
+      k++;
+    }
+  }
+
+  for (k = ip; k <= iu; k++) {
+    array[k] = array_aux[k];
+  }
+
+  free(array_aux);
+  return count_ob;
 }

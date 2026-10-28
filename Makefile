@@ -82,6 +82,18 @@ exercise5_insertsort: exercise5_insertsort.o sorting.o times.o permutations.o
 exercise5_insertsort.o: exercise5_insertsort.c
 	$(CC) $(CFLAGS) -c $<
 
+
+exercise4_mergesort: exercise4_mergesort.o sorting.o times.o permutations.o
+	$(CC) $(CFLAGS) -o exercise4_mergesort exercise4_mergesort.o sorting.o times.o permutations.o
+
+exercise4_mergesort.o: exercise4_mergesort.c
+	$(CC) $(CFLAGS) -c $<
+
+exercise4_mergesort_test:
+	make exercise4_mergesort
+	./exercise4_mergesort -size 20
+
+
 exercises:
 	make all
 	@echo running exercises
