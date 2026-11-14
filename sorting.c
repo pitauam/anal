@@ -112,7 +112,7 @@ int MergeSort(int* array, int ip, int iu)
   int rec_merge = 0;
 
   
-  if (!array || ip > iu){
+  if (!array || ip < 0 || ip > iu){
     return ERR; /*ERR es -1*/
   }
 
@@ -160,7 +160,11 @@ int merge(int* array, int ip, int iu, int im)
   int k;
   int count_ob = 0;
 
-  array_aux = (int*)calloc((iu + 1), sizeof(int));
+  if (!array || ip < 0 || ip > im || im >= iu) {
+    return ERR;
+  }
+
+  array_aux = (int*)calloc((size_t)iu + 1, sizeof(int));
   if (!array_aux) {
     return ERR;
   }
@@ -231,6 +235,7 @@ int partition(int* array, int ip, int iu, int* pos, pfunc_pivot pivot) {
 
     ob_pivot = pivot(array, ip, iu, pos);
     if (ob_pivot == ERR) return ERR;
+    if (*pos < ip || *pos > iu) return ERR;
     count_ob += ob_pivot;
 
     piv_val = array[*pos];
@@ -332,7 +337,7 @@ int pivot_median(int* array, int ip, int iu, int* pos) {
 int QuickSort_median(int* array, int ip, int iu) {
     int pos, ob_part, ob_izq, ob_der, count_ob = 0;
 
-    if (!array || ip < 0) return ERR;
+    if (!array || ip < 0 || iu < -1) return ERR;
     if (ip >= iu) return 0;
 
     ob_part = partition(array, ip, iu, &pos, pivot_median);
@@ -359,7 +364,7 @@ int pivot_mean(int* array, int ip, int iu, int* pos) {
 int QuickSort_mean(int* array, int ip, int iu) {
     int pos, ob_part, ob_izq, ob_der, count_ob = 0;
 
-    if (!array || ip < 0) return ERR;
+    if (!array || ip < 0 || iu < -1) return ERR;
     if (ip >= iu) return 0;
 
     ob_part = partition(array, ip, iu, &pos, pivot_mean);

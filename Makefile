@@ -11,7 +11,7 @@ EXE = exercise1 exercise2 exercise3 exercise4 exercise5
 
 all : $(EXE)
 
-.PHONY : clean
+.PHONY : clean exercise5_plot_data plot_tiempos_merge plot_tiempos_quicksort
 clean :
 	rm -f *.o core $(EXE) *.log exercise4_mergesort exercise5_mergesort exercise4_quicksort
 #añadido eliminar los .log
@@ -74,6 +74,7 @@ grafica: clean exercise4 exercise5 exercise5_insertsort
 	gnuplot operaciones_insert.gp
 	gnuplot operaciones_bubble.gp
 
+# Ejecuta todos los tests
 exercises:
 	make all
 	@echo running exercises
@@ -98,5 +99,11 @@ histograma: exercise1
 
 	
 # P2: Generar los gráficos con GNUplot
-plot_tiempos_merge_fit:
+exercise5_plot_data: exercise5
+	./exercise5 -num_min 5 -num_max 500 -incr 5 -numP 100 -outputFile exercise5.log
+
+plot_tiempos_merge: exercise5_plot_data
 	gnuplot mergesort.gp
+
+plot_tiempos_quicksort: exercise5_plot_data
+	gnuplot quicksort.gp
