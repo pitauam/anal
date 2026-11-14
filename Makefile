@@ -74,47 +74,6 @@ grafica: clean exercise4 exercise5 exercise5_insertsort
 	gnuplot operaciones_insert.gp
 	gnuplot operaciones_bubble.gp
 
-#instrucciones para compilar exercise5_insertsort
-
-exercise5_insertsort: exercise5_insertsort.o sorting.o times.o permutations.o
-	$(CC) $(CFLAGS) -o exercise5_insertsort exercise5_insertsort.o sorting.o times.o permutations.o
-
-exercise5_insertsort.o: exercise5_insertsort.c
-	$(CC) $(CFLAGS) -c $<
-
-
-exercise4_mergesort: exercise4_mergesort.o sorting.o times.o permutations.o
-	$(CC) $(CFLAGS) -o exercise4_mergesort exercise4_mergesort.o sorting.o times.o permutations.o
-
-exercise4_mergesort.o: exercise4_mergesort.c
-	$(CC) $(CFLAGS) -c $<
-
-exercise4_mergesort_test:
-	make exercise4_mergesort
-	./exercise4_mergesort -size 20
-
-exercise5_mergesort: exercise5_mergesort.o sorting.o times.o permutations.o
-	$(CC) $(CFLAGS) -o exercise5_mergesort exercise5_mergesort.o sorting.o times.o permutations.o
-
-exercise5_mergesort.o: exercise5_mergesort.c
-	$(CC) $(CFLAGS) -c $<
-
-exercise5_mergesort_test:
-	make exercise5_mergesort
-	./exercise5_mergesort -num_min 3 -num_max 503 -incr 3 -numP 500 -outputFile tiempos_merge.txt
-
-exercise4_quicksort: exercise4_quicksort.o sorting.o times.o permutations.o
-	$(CC) $(CFLAGS) -o exercise4_quicksort exercise4_quicksort.o sorting.o times.o permutations.o
-
-exercise4_quicksort.o: exercise4_quicksort.c
-	$(CC) $(CFLAGS) -c $<
-
-exercise4_quicksort_test:
-	make exercise4_quicksort
-	./exercise4_quicksort -size 20
-
-
-
 exercises:
 	make all
 	@echo running exercises
