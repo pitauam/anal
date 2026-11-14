@@ -38,7 +38,7 @@ int main(int argc, char** argv)
     return 0;
   }
   
-  printf("Practice number 1, section 4 (MergeSort)\n");
+  printf("Practice number 2, section 1 (MergeSort)\n");
   printf("Done by: Santiago Pita y Matias Cantalejo\n");
   printf("Group: 12\n\n");
 

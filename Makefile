@@ -13,7 +13,7 @@ all : $(EXE)
 
 .PHONY : clean
 clean :
-	rm -f *.o core $(EXE) *.log
+	rm -f *.o core $(EXE) *.log exercise4_mergesort exercise5_mergesort exercise4_quicksort
 #añadido eliminar los .log
 
 $(EXE) : % : %.o sorting.o times.o permutations.o
@@ -63,7 +63,7 @@ exercise4_test:
 exercise5_test:
 	@echo Running exercise5
 	@./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
-
+#P1:
 grafica: clean exercise4 exercise5 exercise5_insertsort
 	@echo "Generando datos de tiempos para InsertSort..."
 	./exercise5_insertsort -num_min 100 -num_max 2000 -incr 100 -numP 500 -outputFile insert.log
@@ -143,7 +143,6 @@ histograma: exercise1
 	gnuplot histograma.gp
 
 	
-
-# Regla para generar los gráficos y hacer el ajuste con GNUplot
-plot_tiempos_merge: tiempos_merge.txt fit_mergesort.gp
-	gnuplot fit_mergesort.gp
+# P2: Generar los gráficos con GNUplot
+plot_tiempos_merge_fit:
+	gnuplot mergesort.gp

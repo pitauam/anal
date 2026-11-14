@@ -11,6 +11,9 @@
 
 
 #include "sorting.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 
 /***************************************************/
 /* Function: InsertSort    Date:30/09/26           */
@@ -51,7 +54,7 @@ int InsertSort(int* array, int ip, int iu)
 
 
 /***************************************************/
-/* Function: SelectSort    Date:07/10/26           */
+/* Function: BubbleSort    Date:07/10/26           */
 /* Your comment                                    */
 /***************************************************/
 int BubbleSort(int* array, int ip, int iu)
@@ -87,6 +90,125 @@ int BubbleSort(int* array, int ip, int iu)
     i--; 
   }
   
+  return count_ob;
+}
+
+
+/***************************************************/
+/* Function: MergeSort    Date:21/10/26            */
+/* Your comment                                    */
+/***************************************************/
+
+/*ip: primero, iu: ultimo, im: medio (ult indice de la mitad izq)
+ob: comparacion de claves
+ordenar de menor a mayor
+err si hay un error y numero de ob ejecutadas si no hay error
+el recuento debe incluir las llamadas recursivas */
+int MergeSort(int* array, int ip, int iu)
+{
+  int medio = -1;
+  int rec_izq = 0;
+  int rec_der = 0;
+  int rec_merge = 0;
+
+  
+  if (!array || ip > iu){
+    return ERR; /*ERR es -1*/
+  }
+
+  if (ip == iu){
+    return 0;
+  }
+  
+
+  medio = ip + ((iu-ip) / 2); /*partir*/
+
+  rec_izq = MergeSort(array, ip, medio);
+  if (rec_izq == ERR){
+    return ERR;
+  }
+
+  rec_der = MergeSort(array, medio + 1, iu);
+  if (rec_der == ERR){
+    return ERR;
+  }
+
+  rec_merge = merge(array, ip, iu, medio);
+  if (rec_merge == ERR){
+    return ERR;
+  }
+
+  return rec_izq + rec_der + rec_merge;
+
+}
+
+
+
+
+
+
+
+/***************************************************/
+/* Function: merge   (combinar) Date:21/10/26      */
+/* Your comment                                    */
+/***************************************************/
+int merge(int* array, int ip, int iu, int im)
+{
+  int *array_aux = NULL;
+  int i;
+  int j;
+  int k;
+  int count_ob = 0;
+
+  array_aux = (int*)calloc((iu + 1), sizeof(int));
+  if (!array_aux) {
+    return ERR;
+  }
+
+  i = ip;
+  j = im + 1;
+  k = ip;
+  
+  while (i <= im && j <= iu)
+  {
+    count_ob++;
+    if (array[i] < array[j])
+    {
+      array_aux[k] = array[i];
+      i++;
+    }
+    else
+    {
+      array_aux[k] = array[j];
+      j++;
+    }
+    k++;
+  }
+
+  if (i > im)
+  {
+    while (j <= iu)
+    {
+      array_aux[k] = array[j];
+      j++;
+      k++;
+    }
+  }
+  else if (j > iu)
+  {
+    while (i <= im)
+    {
+      array_aux[k] = array[i];
+      i++;
+      k++;
+    }
+  }
+
+  for (k = ip; k <= iu; k++) {
+    array[k] = array_aux[k];
+  }
+
+  free(array_aux);
   return count_ob;
 }
 
