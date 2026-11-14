@@ -19,21 +19,27 @@ int main(int argc, char** argv)
 {
   int tamano = 0, i, j;
   int ret_insert, ret_bubble;
-  int ret_quick;
+  int ret_quick, ret_quick_median;  
   int* perm = NULL;
   int* perm_insert = NULL;
   int* perm_bubble = NULL;
   int* perm_quick = NULL;
+  int* perm_quick_median = NULL;
  
   int segmento_insert[] = {10, 50, 40, 30, 20};
   int segmento_bubble[] = {10, 50, 40, 30, 20}; 
   int segmento_quick[] = {10, 50, 40, 30, 20};
+  int segmento_quick_median[] = {10, 50, 40, 30, 20};
   int ob_seg_ins, ob_seg_bub;
-  int ob_seg_quick;
+  int ob_seg_quick, ob_seg_quick_median;
   
   int tabla_un_elemento[] = {42};
   int ob_uno;
-  int ob_uno_quick;
+  int ob_uno_quick, ob_uno_quick_median;
+  int ob_vacio_quick, ob_vacio_quick_median;
+
+  int tabla_mediana[] = {1, 3, 5, 4, 2};
+  int pos_mediana, ob_pivot_mediana;
 
   srand(time(NULL));
 
@@ -68,13 +74,15 @@ int main(int argc, char** argv)
   perm_insert = (int*)malloc(tamano * sizeof(int));
   perm_bubble = (int*)malloc(tamano * sizeof(int));
   perm_quick = (int*)malloc(tamano * sizeof(int));
+  perm_quick_median = (int*)malloc(tamano * sizeof(int));
   
-  if (perm_insert == NULL || perm_bubble == NULL || perm_quick == NULL) {
+  if (perm_insert == NULL || perm_bubble == NULL || perm_quick == NULL || perm_quick_median == NULL) {
     printf("Error: Out of memory for copies\n");
     free(perm);
     if(perm_insert) free(perm_insert);
     if(perm_bubble) free(perm_bubble);
     if(perm_quick) free(perm_quick);
+    if(perm_quick_median) free(perm_quick_median);
     exit(-1);
   }
 
@@ -82,6 +90,7 @@ int main(int argc, char** argv)
       perm_insert[j] = perm[j];
       perm_bubble[j] = perm[j];
       perm_quick[j] = perm[j];
+      perm_quick_median[j] = perm[j];
   }
 
   /*PRUEBA 1: ORDENACION DE LA TABLA COMPLETA*/
@@ -90,21 +99,28 @@ int main(int argc, char** argv)
   ret_insert = InsertSort(perm_insert, 0, tamano - 1);
   if (ret_insert == -1) { /* Usando -1 en lugar de ERR por si acaso */
     printf("Error: Error in InsertSort\n");
-    free(perm); free(perm_insert); free(perm_bubble); free(perm_quick);
+    free(perm); free(perm_insert); free(perm_bubble); free(perm_quick); free(perm_quick_median);
     exit(-1);
   }
 
   ret_bubble = BubbleSort(perm_bubble, 0, tamano - 1);
   if (ret_bubble == -1) {
     printf("Error: Error in BubbleSort\n");
-    free(perm); free(perm_insert); free(perm_bubble); free(perm_quick);
+    free(perm); free(perm_insert); free(perm_bubble); free(perm_quick); free(perm_quick_median);
     exit(-1);
   }
 
   ret_quick = QuickSort_min(perm_quick, 0, tamano - 1);
   if (ret_quick == -1) {
     printf("Error: Error in QuickSort\n");
-    free(perm); free(perm_insert); free(perm_bubble); free(perm_quick);
+    free(perm); free(perm_insert); free(perm_bubble); free(perm_quick); free(perm_quick_median);
+    exit(-1);
+  }
+
+  ret_quick_median = QuickSort_median(perm_quick_median, 0, tamano - 1);
+  if (ret_quick_median == -1) {
+    printf("Error: Error in QuickSort_median\n");
+    free(perm); free(perm_insert); free(perm_bubble); free(perm_quick); free(perm_quick_median);
     exit(-1);
   }
 
@@ -126,12 +142,19 @@ int main(int argc, char** argv)
   }
   printf("\n\n");
 
+  printf("QuickSort_median -> OB ejecutadas: %d\n", ret_quick_median);
+  for(j = 0; j < tamano; j++) {
+    printf("%d ", perm_quick_median[j]);
+  }
+  printf("\n\n");
+
   /*PRUEBA 2: SEGMENTOS QUE NO EMPIEZAN EN 0*/
   printf("--- 2. PRUEBA DE SEGMENTO (Indices 1 a 3) ---\n");
   
   ob_seg_ins = InsertSort(segmento_insert, 1, 3);
   ob_seg_bub = BubbleSort(segmento_bubble, 1, 3);
   ob_seg_quick = QuickSort_min(segmento_quick, 1, 3);
+  ob_seg_quick_median = QuickSort_median(segmento_quick_median, 1, 3);
   
   printf("Array original: 10 50 40 30 20\n");
   
@@ -145,6 +168,10 @@ int main(int argc, char** argv)
 
   printf("QuickSort_min (1 a 3) -> OB: %d | Array: ", ob_seg_quick);
   for(j = 0; j < 5; j++) printf("%d ", segmento_quick[j]);
+  printf("\n");
+
+  printf("QuickSort_median (1 a 3) -> OB: %d | Array: ", ob_seg_quick_median);
+  for(j = 0; j < 5; j++) printf("%d ", segmento_quick_median[j]);
   printf("\n\n");
 
   /*PRUEBA 3: TABLA DE UN SOLO ELEMENTO */
@@ -156,11 +183,24 @@ int main(int argc, char** argv)
   ob_uno_quick = QuickSort_min(tabla_un_elemento, 0, 0);
   printf("QuickSort_min (0 a 0) -> OB: %d | Elemento: %d\n", ob_uno_quick, tabla_un_elemento[0]);
 
+  ob_uno_quick_median = QuickSort_median(tabla_un_elemento, 0, 0);
+  printf("QuickSort_median (0 a 0) -> OB: %d | Elemento: %d\n", ob_uno_quick_median, tabla_un_elemento[0]);
+
+  ob_vacio_quick = QuickSort_min(tabla_un_elemento, 1, 0);
+  printf("QuickSort_min (1 a 0) -> OB: %d\n", ob_vacio_quick);
+
+  ob_vacio_quick_median = QuickSort_median(tabla_un_elemento, 1, 0);
+  printf("QuickSort_median (1 a 0) -> OB: %d\n", ob_vacio_quick_median);
+
+  ob_pivot_mediana = pivot_median(tabla_mediana, 0, 4, &pos_mediana);
+  printf("pivot_median (0 a 4) -> OB: %d | pos: %d\n", ob_pivot_mediana, pos_mediana);
+
   /* Liberar toda la memoria dinamica */
   free(perm);
   free(perm_insert);
   free(perm_bubble);
   free(perm_quick);
+  free(perm_quick_median);
 
   return 0;
 }
