@@ -266,8 +266,8 @@ int partition(int* array, int ip, int iu, int* pos, pfunc_pivot pivot) {
 int QuickSort_min(int* array, int ip, int iu) {
     int pos, ob_part, ob_izq, ob_der, count_ob = 0;
 
-    if (!array) return ERR;
-    if (ip >= iu) return 0; 
+    if (!array || ip < 0 || iu < -1) return ERR;
+    if (ip >= iu) return 0;
 
     ob_part = partition(array, ip, iu, &pos, pivot_min);
     if (ob_part == ERR) return ERR;

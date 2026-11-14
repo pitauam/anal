@@ -4,7 +4,7 @@
 /*                                                         */
 /* Programa that writes in a file                          */
 /* the average times of the algorithm                      */
-/* of sorting by insertion                                 */
+/* of sorting algorithms                                    */
 /*                                                         */
 /* Input: Command Line                                     */
 /* -num_min: lowest number of table elements               */
@@ -23,10 +23,30 @@
 #include "sorting.h"
 #include "times.h"
 
+/*funcion auxiliar para que los .log generados se distingan*/
+static void set_output_name(char* output, const char* base, const char* suffix)
+{
+  size_t length;
+
+  strcpy(output, base);
+  length = strlen(output);
+  if (length >= 4 && strcmp(output + length - 4, ".log") == 0) {
+    output[length - 4] = '\0';
+    strcat(output, "_");
+    strcat(output, suffix);
+    strcat(output, ".log");
+  } else {
+    strcat(output, "_");
+    strcat(output, suffix);
+  }
+}
+
 int main(int argc, char** argv)
 {
   int i, num_min, num_max, incr, n_perms;
   char nombre[256];
+  char nombre_insert[300], nombre_merge[300];
+  char nombre_min[300], nombre_mean[300], nombre_median[300];
   short ret;
 
   srand(time(NULL));
@@ -66,9 +86,45 @@ int main(int argc, char** argv)
   }
 
   /* compute times */
-  ret = generate_sorting_times(BubbleSort, nombre,num_min, num_max,incr, n_perms);
+  set_output_name(nombre_insert, nombre, "insert");
+  set_output_name(nombre_merge, nombre, "merge");
+  set_output_name(nombre_min, nombre, "quick_min");
+  set_output_name(nombre_mean, nombre, "quick_mean");
+  set_output_name(nombre_median, nombre, "quick_median");
+
+  ret = generate_sorting_times(BubbleSort, nombre, num_min, num_max, incr, n_perms);
   if (ret == ERR) { /* ERR_TIME should be a negative number */
-    printf("Error in function generate_sorting_times\n");
+    printf("Error in function generate_sorting_times (BubbleSort)\n");
+    exit(-1);
+  }
+
+  ret = generate_sorting_times(InsertSort, nombre_insert, num_min, num_max, incr, n_perms);
+  if (ret == ERR) {
+    printf("Error in function generate_sorting_times (InsertSort)\n");
+    exit(-1);
+  }
+
+  ret = generate_sorting_times(MergeSort, nombre_merge, num_min, num_max, incr, n_perms);
+  if (ret == ERR) {
+    printf("Error in function generate_sorting_times (MergeSort)\n");
+    exit(-1);
+  }
+
+  ret = generate_sorting_times(QuickSort_min, nombre_min, num_min, num_max, incr, n_perms);
+  if (ret == ERR) {
+    printf("Error in function generate_sorting_times (QuickSort_min)\n");
+    exit(-1);
+  }
+
+  ret = generate_sorting_times(QuickSort_mean, nombre_mean, num_min, num_max, incr, n_perms);
+  if (ret == ERR) {
+    printf("Error in function generate_sorting_times (QuickSort_mean)\n");
+    exit(-1);
+  }
+
+  ret = generate_sorting_times(QuickSort_median, nombre_median, num_min, num_max, incr, n_perms);
+  if (ret == ERR) {
+    printf("Error in function generate_sorting_times (QuickSort_median)\n");
     exit(-1);
   }
   printf("Correct output \n");

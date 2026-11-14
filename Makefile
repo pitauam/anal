@@ -83,8 +83,6 @@ exercise5_insertsort.o: exercise5_insertsort.c
 	$(CC) $(CFLAGS) -c $<
 
 
-
-
 exercise4_mergesort: exercise4_mergesort.o sorting.o times.o permutations.o
 	$(CC) $(CFLAGS) -o exercise4_mergesort exercise4_mergesort.o sorting.o times.o permutations.o
 
@@ -132,7 +130,7 @@ exercises:
 	make exercise5_test
 
 
-
+#P1
 histograma: exercise1
 	@echo "Generando datos para el histograma..."
 	./exercise1 -limInf 0 -limSup 9 -numN 100000 > histograma.log
