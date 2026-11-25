@@ -35,6 +35,10 @@ PDICT init_dictionary(int size, char order){
     return dict;
 }
 
+
+
+/*La funci ́on free dictionary liberar ́a la memoria reservada para el diccionario, incluida la tabla de claves y la
+propia estructura.*/
 void free_dictionary(PDICT pdict){
     if (!pdict || !pdict->table){
         return;
@@ -112,8 +116,14 @@ int insert_dictionary(PDICT pdict, int key){
     return OK;
 }
 
+
+/*La funci ́on massive insertion dictionary insertar ́a en el diccionario las n keys claves almacenadas en la tabla
+keys, mediante n keys llamadas a insert dictionary (una por clave).*/
 int massive_insertion_dictionary(PDICT pdict, int *keys, int n_keys);
 
+/*La funci ́on search dictionary buscar ́a la clave en el diccionario apuntado por pdict mediante el m ́etodo
+indicado por method. Escribir ́a en *ppos el  ́ındice de la clave encontrada o NOT FOUND si no est ́a; devolver ́a el
+n ́umero de operaciones b ́asicas realizadas o ERR si se produce un error*/
 int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method);
 
 int bin_search(int *table, int F, int L, int key, int *ppos);
