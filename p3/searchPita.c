@@ -25,7 +25,7 @@ PDICT init_dictionary(int size, char order){
     dict->size = size;
     dict->n_data = 0;
     dict->order = order;
-    dict->table = (int*)calloc(size, sizeof(dict));
+    dict->table = (int*)calloc(size, sizeof(int));
 
     if (!dict->table){
         free(dict);
@@ -78,6 +78,14 @@ int insert_dictionary(PDICT pdict, int key){
     }
     else
     {
+        /*si esta vacio hay indices negativos*/
+        if (pdict->n_data <= 0)
+        {
+            pdict->table[pdict->n_data] = key;
+            pdict->n_data++;
+            return OK;
+        }
+
         i = 0;
 
         /*avanzo hasta el elemento donde key es mayor o igual que el elemento i*/
