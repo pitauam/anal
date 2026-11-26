@@ -119,12 +119,46 @@ int insert_dictionary(PDICT pdict, int key){
 
 /*La funci ́on massive insertion dictionary insertar ́a en el diccionario las n keys claves almacenadas en la tabla
 keys, mediante n keys llamadas a insert dictionary (una por clave).*/
-int massive_insertion_dictionary(PDICT pdict, int *keys, int n_keys);
+int massive_insertion_dictionary(PDICT pdict, int *keys, int n_keys){
+
+    int i = 0;
+
+    if (!pdict || (pdict->order != NOT_SORTED && pdict->order != SORTED) || pdict->n_data >= pdict->size || !keys || n_keys <= 0 || n_keys > (pdict->size-pdict->n_data)){
+        return ERR;
+    }
+
+    for (i= 0; i < n_keys; i++)
+    {
+        if (insert_dictionary(pdict, keys[i]) == ERR){
+            return ERR;
+        }
+    }
+
+
+
+    return OK;
+}
 
 /*La funci ́on search dictionary buscar ́a la clave en el diccionario apuntado por pdict mediante el m ́etodo
 indicado por method. Escribir ́a en *ppos el  ́ındice de la clave encontrada o NOT FOUND si no est ́a; devolver ́a el
 n ́umero de operaciones b ́asicas realizadas o ERR si se produce un error*/
-int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method);
+int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method){
+
+    int ret = NOT_FOUND;
+
+    if (!pdict || (pdict->order != NOT_SORTED && pdict->order != SORTED) || pdict->n_data >= pdict->size || !ppos || !method){
+        return ERR;
+    }
+
+    ret = method(pdict, 0, pdict->n_data, key, ppos);
+
+    if (ret == NOT_FOUND)
+    {
+        return ERR;
+    }
+    
+    return ret;
+}
 
 int bin_search(int *table, int F, int L, int key, int *ppos);
 
