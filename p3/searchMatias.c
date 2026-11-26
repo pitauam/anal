@@ -6,6 +6,10 @@
 #include "search.h"
 #include "permutations.h"
 
+/*valores para las funciones de generar keys*/
+#define ALPHA 1.5
+#define PI 3.14159265358979323846
+
 
 /*La funci ́on init dictionary crear ́a un diccionario vac ́ıo (sin datos) y reservar ́a espacio para una tabla de al
 menos size posiciones. El argumento size indica la capacidad inicial, y order debe tomar el valor SORTED o

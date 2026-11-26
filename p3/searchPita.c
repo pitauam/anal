@@ -6,6 +6,10 @@
 #include "search.h"
 #include "permutations.h"
 
+/*valores para las funciones de generar keys*/
+#define ALPHA 1.5
+#define PI 3.14159265358979323846
+
 
 /*La funci ́on init dictionary crear ́a un diccionario vac ́ıo (sin datos) y reservar ́a espacio para una tabla de al
 menos size posiciones. El argumento size indica la capacidad inicial, y order debe tomar el valor SORTED o
@@ -166,8 +170,76 @@ int lin_search(int *table, int F, int L, int key, int *ppos);
 
 int lin_auto_search(int *table, int F, int L, int key, int *ppos);
 
-void uniform_key_generator(int *keys, int n_keys, int max);
+/*genera claves enteras entre [1, max]*/
+void uniform_key_generator(int *keys, int n_keys, int max){
+    int i = 0;
 
-void potential_key_generator(int *keys, int n_keys, int max);
+    if (!keys || n_keys <= 0 || max <= 0){
+        return;
+    }
 
-void gaussian_key_generator(int *keys, int n_keys, int max);
+    for (i = 0; i < n_keys; i++){
+        keys[i] = 1 + (int)(((double)rand() / ((double)RAND_MAX + 1.0)) * max);
+    }
+}
+
+/*genera claves con distribucion proporcional a k^(-ALPHA)*/
+void potential_key_generator(int *keys, int n_keys, int max){
+    int i = 0;
+    int k = 0;
+    double total = 0.0;
+    double r = 0.0;
+    double acumulado = 0.0;
+
+    if (!keys || n_keys <= 0 || max <= 0){
+        return;
+    }
+
+    for (k = 1; k <= max; k++){
+        total += pow(k, -ALPHA);
+    }
+
+    for (i = 0; i < n_keys; i++){
+        r = ((double)rand() / ((double)RAND_MAX + 1.0)) * total;
+        acumulado = 0.0;
+
+        for (k = 1; k <= max; k++){
+            acumulado += pow(k, -ALPHA);
+            if (r < acumulado){
+                break;
+            }
+        }
+
+        keys[i] = k;
+    }
+}
+
+/*genera claves con distribución de gauss centrada en el punto medio*/
+void gaussian_key_generator(int *keys, int n_keys, int max){
+    int i = 0;
+    double mu = 0.0;
+    double sigma = 0.0;
+    double u1 = 0.0;
+    double u2 = 0.0;
+    double z = 0.0;
+    double x = 0.0;
+
+    if (!keys || n_keys <= 0 || max <= 0){
+        return;
+    }
+
+    mu = (max + 1.0) / 2.0;
+    sigma = max / 12.0;
+
+    for (i = 0; i < n_keys; i++){
+        do{
+            u1 = ((double)rand() + 1.0) / ((double)RAND_MAX + 1.0);
+            u2 = (double)rand() / ((double)RAND_MAX + 1.0);
+
+            z = sqrt(-2.0 * log(u1)) * cos(2.0 * PI * u2);
+            x = mu + sigma * z;
+        } while (x < 0.5 || x >= max + 0.5);
+
+        keys[i] = (int)floor(x + 0.5);
+    }
+}
